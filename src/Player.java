@@ -44,4 +44,6 @@ public class Player extends Entities {
      * @return the coordinates of the player's position in the matrix
      */
     public int[][] getPlayerCoords() { return coordinates; }
+
+    public int getPlayerDirection() { return direction; }
 }
