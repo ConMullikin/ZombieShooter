@@ -1,7 +1,5 @@
-public class DamageMechanics extends PlayerStatistics {
-    private int[][] bulletCordinates;
+public class DamageMechanics {
+    public boolean bulletTouchingZombie(int[][] bulletCoords, int[][] zombieCoords) { return false; }
 
-    public boolean bulletTouchingZombie(int[][] zombieCoords) { return false; }
-
-    public boolean zombieTouchingPlayer(int[][] zombieCoords) { return false; }
+    public boolean zombieTouchingPlayer(int[][] humanCoords, int[][] zombieCoords) { return false; }
 }

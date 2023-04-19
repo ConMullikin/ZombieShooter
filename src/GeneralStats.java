@@ -1,4 +1,8 @@
 public class GeneralStats {
-    private boolean alive;
-    private int killScore;
+    private int turnCounter = 0;
+    private int killCounter = 0;
+
+    public int getTurns() { return turnCounter; }
+
+    public int getKills() { return killCounter; }
 }
