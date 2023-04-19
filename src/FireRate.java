@@ -14,7 +14,7 @@ public class FireRate extends Player {
     /**
      * Moves the bullet in the direction that the player is facing
      */
-    public void moveBullet(int direction) {}
+    public void moveBullet(char direction) {}
 
     /**
      * Returns the bullet's coordinates
