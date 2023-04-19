@@ -12,4 +12,6 @@ public class Player extends Entities {
     public void playerMove() {}
 
     public int[][] getPlayerCoords() { return coordinates; }
+
+    public int getPlayerDirection() { return direction; }
 }
