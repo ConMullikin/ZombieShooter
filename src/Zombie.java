@@ -13,7 +13,7 @@ public class Zombie extends Entities {
     /**
      * Tracks the zombie's position in the 2-D array (i.e. on the board)
      */
-    private int[][] coordinates;
+    private int[] coordinates;
 
     /**
      * Constructor which instantiates an instance of a zombie
@@ -36,5 +36,5 @@ public class Zombie extends Entities {
      * Getter method for the positional coordinates of a zombie
      * @return the positional coordinates for a zombie in the 2-D array
      */
-    public int[][] getZombieCoords() { return coordinates; }
+    public int[] getZombieCoords() { return coordinates; }
 }

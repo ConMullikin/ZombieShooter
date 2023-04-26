@@ -21,7 +21,7 @@ public class Player extends Entities {
     /**
      * Tracks the position of the player in the 2D array
      */
-    private int[][] coordinates;
+    private int[] coordinates;
 
     /**
      * Constructor which instantiates a player instance and assigns all class variable with initial values
@@ -43,7 +43,7 @@ public class Player extends Entities {
      * Getter which returns the player's position in the 2-D array
      * @return the coordinates of the player's position in the matrix
      */
-    public int[][] getPlayerCoords() { return coordinates; }
+    public int[] getPlayerCoords() { return coordinates; }
 
     /**
      * Getter used to identify/return which direction the player is facing
