@@ -7,6 +7,8 @@ import java.util.Queue;
  * Simulates the game by creating Player and Zombie objects and calling upon them to simulate their turns, printing the board out after each turn
  */
 public class GameSim {
+
+    ArrayList<Zombie> zombies = new ArrayList<>();
     /**
      * Number of zombies spawned in the first wave
      */
