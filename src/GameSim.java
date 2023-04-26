@@ -19,7 +19,10 @@ public class GameSim {
     /**
      * Runs the actual game
      */
-    public void gameSim() {}
+    public void gameSim() {
+        Board board = new Board();
+        board.printBoard();
+    }
 
     /**
      * Generates number of zombies pertaining to the wave in queue and returns the objects in an arraylist
