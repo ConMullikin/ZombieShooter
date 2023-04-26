@@ -45,5 +45,9 @@ public class Player extends Entities {
      */
     public int[][] getPlayerCoords() { return coordinates; }
 
+    /**
+     * Getter used to identify/return which direction the player is facing
+     * @return the direction of the player
+     */
     public int getPlayerDirection() { return direction; }
 }
