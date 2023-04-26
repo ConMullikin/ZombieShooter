@@ -13,7 +13,7 @@ public class Player extends Entities {
     /**
      * Tracks the direction that a player faces based on key input
      */
-    private char direction;
+    private int[] direction;
     /**
      * Tracks the number of times fired by the player in a given turn
      */
@@ -49,5 +49,5 @@ public class Player extends Entities {
      * Getter used to identify/return which direction the player is facing
      * @return the direction of the player
      */
-    public int getPlayerDirection() { return direction; }
+    public int[] getPlayerDirection() { return direction; }
 }

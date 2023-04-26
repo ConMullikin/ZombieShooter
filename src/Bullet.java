@@ -1,7 +1,7 @@
 /**
  * Class for bullet that is able to move it and stores its coordinates
  */
-public class FireRate extends Player {
+public class Bullet {
     /**
      * Max amount that a player is able to shoot
      */
@@ -9,16 +9,16 @@ public class FireRate extends Player {
     /**
      * Stores x and y coordinates of bullet
      */
-    private int[][] bulletCordinates;
+    private int[] bulletCordinates;
 
     /**
      * Moves the bullet in the direction that the player is facing
      */
-    public void moveBullet(char direction) {}
+    public void moveBullet(int[] direction) {}
 
     /**
      * Returns the bullet's coordinates
      * @return
      */
-    public int[][] getBulletCoords() { return bulletCordinates; }
+    public int[] getBulletCoords() { return bulletCordinates; }
 }

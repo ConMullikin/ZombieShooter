@@ -1,18 +1,14 @@
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.LinkedList;
-import java.util.Queue;
+import java.util.*;
 
 /**
  * Simulates the game by creating Player and Zombie objects and calling upon them to simulate their turns, printing the board out after each turn
  */
 public class GameSim {
 
-    ArrayList<Zombie> zombies = new ArrayList<>();
     /**
-     * Number of zombies spawned in the first wave
+     * Holds all the zombies currently at play in a HashSet
      */
-    private int numZombies = 3;
+    HashSet<Zombie> zombies;
     /**
      * Queue that stores the amount of zombies spawned in each following wave
      */
@@ -22,16 +18,23 @@ public class GameSim {
      * Runs the actual game
      */
     public void gameSim() {
+        Player player = new Player();
+        zombies = zombieGeneration();
+
         Board board = new Board();
-        board.printBoard();
+        board.printBoard(zombies, player);
     }
 
     /**
-     * Generates number of zombies pertaining to the wave in queue and returns the objects in an arraylist
-     * @return
+     * Generates number of zombies pertaining to the wave in queue and returns the objects in a new HashSet
+     * @return the new HashSet
      */
-    public ArrayList<Zombie> zombieGeneration() {
-        ArrayList<Zombie> zombies = new ArrayList<Zombie>();
+    public HashSet<Zombie> zombieGeneration() {
+        HashSet<Zombie> zombies = new HashSet<>();
+        for (int i = 0; i < zombiesSpawn.remove(); i++) {
+            Zombie zombie = new Zombie();
+            zombies.add(zombie);
+        }
         return zombies;
     }
 }

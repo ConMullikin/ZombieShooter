@@ -1,11 +1,23 @@
-import java.lang.reflect.Array;
 import java.util.ArrayList;
+import java.util.HashSet;
 
 public class Board {
+    /**
+     * Width of the board
+     */
     private final int boardWidth = 30;
+    /**
+     * Height of the board
+     */
     private final int boardHeight = 10;
+    /**
+     * Holds all  the positions of the board
+     */
     private String[][] board;
 
+    /**
+     * Creates an empty board
+     */
     public Board() {
         board = new String[boardHeight][boardWidth];
         for (int i = 0; i < boardHeight; i++) {
@@ -15,11 +27,16 @@ public class Board {
         }
     }
 
-    public void printBoard(ArrayList<Zombie> zombies, Player player) {
+    /**
+     * Prints out all the positions of the entities and empty spaces in the board
+     * @param zombies HashSet of all the zombies in existence, used to get their coords
+     * @param player The player, used to get their coords
+     */
+    public void printBoard(HashSet<Zombie> zombies, Player player) {
         board[player.getPlayerCoords()[0]][player.getPlayerCoords()[1]] = "X";
 
-        for (int i = 0; i < zombies.size(); i++) {
-            board[zombies.get(i).getCoords()[0]][zombies.get(i).getCoords()[1]] = "Z";
+        for (Zombie zombie : zombies) {
+            board[zombie.getCoords()[0]][zombie.getCoords()[0]] = "Z";
         }
 
         for (int i = 0; i < boardHeight; i++) {
