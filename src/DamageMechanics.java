@@ -23,6 +23,7 @@ public class DamageMechanics {
 
         bulletCoords[0] += player.getPlayerDirection()[0];
         bulletCoords[1] += player.getPlayerDirection()[1];
+        return zombies;
     }
 
     /**
