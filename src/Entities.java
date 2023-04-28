@@ -18,11 +18,15 @@ public abstract class Entities extends GeneralStats {
     /**
      * Follows through for the entity's move for that turn
      */
-    public abstract void makeTurn();
+    public abstract boolean makeTurn();
 
     /**
      * Getter which returns the entity's position in the 2-D array
      * @return the coordinates of the entity's position in the matrix
      */
     public int[] getCoords() { return coordinates; }
+
+    public int getLives() { return lives; }
+
+    public void setLives(int lives) { this.lives = lives; }
 }

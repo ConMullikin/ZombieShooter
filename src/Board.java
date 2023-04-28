@@ -33,7 +33,7 @@ public class Board {
      * @param player The player, used to get their coords
      */
     public void printBoard(HashSet<Zombie> zombies, Player player) {
-        board[player.getPlayerCoords()[0]][player.getPlayerCoords()[1]] = "X";
+        board[player.getCoords()[0]][player.getCoords()[1]] = "X";
 
         for (Zombie zombie : zombies) {
             board[zombie.getCoords()[0]][zombie.getCoords()[0]] = "Z";

@@ -28,9 +28,17 @@ public class DamageMechanics {
 
     /**
      * Checks to see if a human is touching a zombie using their coords and returns true if so
-     * @param humanCoords
-     * @param zombieCoords
+     * @param player
+     * @param zombies
      * @return
      */
-    public boolean zombieTouchingPlayer(int[] humanCoords, int[] zombieCoords) { return false; }
+    public boolean zombieTouchingPlayer(Player player, HashSet<Zombie> zombies) {
+        for (Zombie zombie : zombies) {
+            if (player.getCoords()[0] == zombie.getCoords()[0] && player.getCoords()[1] == zombie.getCoords()[1]) {
+                zombies.remove(zombie);
+                return true;
+            }
+        }
+        return false;
+    }
 }

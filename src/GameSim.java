@@ -18,11 +18,13 @@ public class GameSim {
      * Runs the actual game
      */
     public void gameSim() {
+        Board board = new Board();
         Player player = new Player();
         zombies = zombieGeneration();
 
-        Board board = new Board();
-        board.printBoard(zombies, player);
+        while(player.getLives() > 0 && zombiesSpawn.size() > 0) {
+
+        }
     }
 
     /**

@@ -24,7 +24,7 @@ public class Zombie extends Entities {
      * Method inherited from the Entities class which formulates a turn for a given Zombie entity to be executed
      * in the GameSim class
      */
-    public void makeTurn() {}
+    public boolean makeTurn() { return false; }
 
     /**
      * Method which has the zombie move towards the player (zombies will have access to player coordinates as a
