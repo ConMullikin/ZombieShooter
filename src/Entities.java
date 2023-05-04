@@ -13,12 +13,7 @@ public abstract class Entities extends GeneralStats {
     /**
      * Tracks the position of the entity in the 2D array
      */
-    private int[] coordinates;
-
-    /**
-     * Follows through for the entity's move for that turn
-     */
-    public abstract boolean makeTurn();
+    private int[] coordinates = new int[2];
 
     /**
      * Getter which returns the entity's position in the 2-D array

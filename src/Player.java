@@ -15,7 +15,7 @@ public class Player extends Entities {
     /**
      * Tracks the direction that a player faces based on key input
      */
-    private int[] direction;
+    private int[] direction = new int[2];
     /**
      * Tracks the number of times fired by the player in a given turn
      */
@@ -23,7 +23,7 @@ public class Player extends Entities {
     /**
      * Tracks the position of the player in the 2D array
      */
-    private int[] coordinates;
+    private int[] coordinates = new int[2];
 
     /**
      * Constructor which instantiates a player instance and assigns all class variable with initial values
@@ -58,6 +58,7 @@ public class Player extends Entities {
             }
             System.out.println("Incorrect input received, try again.");
         }
+        return false;
     }
 
     /**
@@ -73,7 +74,7 @@ public class Player extends Entities {
      * Getter used to identify/return which direction the player is facing
      * @return the direction of the player
      */
-    public int[] getPlayerDirection() { return direction; }
+    public int[] getDirection() { return direction; }
 
     /**
      * Returns amount of moves player has used during their turn
@@ -85,5 +86,5 @@ public class Player extends Entities {
      * Returns amount of moves player has used during their turn
      *
      */
-    public int setMoves(int moves) { this.moves = moves; }
+    public void setMoves(int moves) { this.moves = moves; }
 }

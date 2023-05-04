@@ -20,10 +20,26 @@ public class GameSim {
     public void gameSim() {
         Board board = new Board();
         Player player = new Player();
+        DamageMechanics mechanics = new DamageMechanics();
         zombies = zombieGeneration();
 
         while(player.getLives() > 0 && zombiesSpawn.size() > 0) {
+            while (player.getMoves() < 3) {
+                if (player.makeTurn()) {
+                    player.playerMove();
 
+                }
+                else {
+                    Bullet bullet = new Bullet(player.getCoords(), player.getDirection());
+                    while (bullet.getBulletCoords()[0] <= 29 && bullet.getBulletCoords()[0] >= 0 && bullet.getBulletCoords()[1] <= 9 && bullet.getBulletCoords()[1] >= 0) {
+                        HashSet<Zombie> newZombies = mechanics.bulletTouchingZombie(bullet, zombies);
+                        if (zombies.size() != newZombies.size()) {
+                            zombies = newZombies;
+                            break;
+                        }
+                    }
+                }
+            }
         }
     }
 
@@ -34,7 +50,7 @@ public class GameSim {
     public HashSet<Zombie> zombieGeneration() {
         HashSet<Zombie> zombies = new HashSet<>();
         for (int i = 0; i < zombiesSpawn.remove(); i++) {
-            Zombie zombie = new Zombie();
+            Zombie zombie = new Zombie(zombies);
             zombies.add(zombie);
         }
         return zombies;

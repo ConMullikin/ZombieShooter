@@ -12,7 +12,7 @@ public class DamageMechanics {
      * @param player
      * @return
      */
-    public HashSet<Zombie> bulletTouchingZombie(Bullet bullet, HashSet<Zombie> zombies, Player player) {
+    public HashSet<Zombie> bulletTouchingZombie(Bullet bullet, HashSet<Zombie> zombies) {
         int[] bulletCoords = bullet.getBulletCoords();
         for (Zombie zombie : zombies) {
             if (bulletCoords[0] == zombie.getCoords()[0] && bulletCoords[1] == zombie.getCoords()[1]) {
@@ -20,9 +20,6 @@ public class DamageMechanics {
                 return zombies;
             }
         }
-
-        bulletCoords[0] += player.getPlayerDirection()[0];
-        bulletCoords[1] += player.getPlayerDirection()[1];
         return zombies;
     }
 

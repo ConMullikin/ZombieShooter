@@ -9,11 +9,11 @@ public class Bullet {
     /**
      * Stores x and y coordinates of bullet
      */
-    private int[] bulletCordinates;
+    private int[] bulletCoordinates = new int[2];
     /**
      * Stores direction of bullet
      */
-    private int[] bulletDirection;
+    private int[] bulletDirection = new int[2];
 
     /**
      * Constructor for Bullet object
@@ -21,22 +21,22 @@ public class Bullet {
      * @param direction
      */
     public Bullet(int[] coordinates, int[] direction) {
-        bulletCordinates[0] = coordinates[0];
-        bulletCordinates[1] = coordinates[1];
-        bulletCordinates[0] = direction[0];
-        bulletCordinates[1] = direction[1];
+        bulletCoordinates[0] = coordinates[0];
+        bulletCoordinates[1] = coordinates[1];
+        bulletDirection[0] = direction[0];
+        bulletDirection[1] = direction[1];
     }
     /**
      * Moves the bullet in the direction that the player is facing
      */
     public void moveBullet() {
-        DamageMechanics bulletCheck = new DamageMechanics();
-        
+        bulletCoordinates[0] += bulletDirection[0];
+        bulletCoordinates[1] += bulletDirection[1];
     }
 
     /**
      * Returns the bullet's coordinates
      * @return
      */
-    public int[] getBulletCoords() { return bulletCordinates; }
+    public int[] getBulletCoords() { return bulletCoordinates; }
 }

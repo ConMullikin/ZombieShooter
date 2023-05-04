@@ -1,3 +1,7 @@
+import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.Random;
+
 /**
  * Class which contains all the statistics and relevant methods for a Zombie entity
  */
@@ -13,18 +17,28 @@ public class Zombie extends Entities {
     /**
      * Tracks the zombie's position in the 2-D array (i.e. on the board)
      */
-    private int[] coordinates;
+    private int[] coordinates = new int[2];
 
     /**
      * Constructor which instantiates an instance of a zombie
      */
-    public Zombie() {}
+    public Zombie(HashSet<Zombie> zombies) {
+        moves = 0;
+        lives = 1;
 
-    /**
-     * Method inherited from the Entities class which formulates a turn for a given Zombie entity to be executed
-     * in the GameSim class
-     */
-    public boolean makeTurn() { return false; }
+        ArrayList<int[]> coordinates = new ArrayList<>();
+        for (Zombie zombie: zombies) {
+            coordinates.add(zombie.getCoords());
+        }
+
+        boolean coordsAdded = false;
+        Random rndm = new Random();
+        while (!coordsAdded) {
+            if(rndm.nextInt(0,1) == 0) {
+
+            }
+        }
+    }
 
     /**
      * Method which has the zombie move towards the player (zombies will have access to player coordinates as a
