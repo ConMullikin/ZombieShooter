@@ -90,9 +90,58 @@ public class Player extends Entities {
      */
     public void setMoves(int moves) { this.moves = moves; }
 
+    /**
+     * Randomly sets the coordinates of a player after being hit by zombie to be a position a few units more away from zombies
+     * @param zombies
+     */
     public void setCoords(HashSet<Zombie> zombies) {
         Random rndm = new Random();
+        boolean zombieNearby;
+        boolean coordsSet = false;
+        int xCoordsChange = 0;
+        int yCoordsChange = 0;
 
+        while (!coordsSet) {
+            zombieNearby = false;
+            if (rndm.nextInt(1) == 0) {
+                if (rndm.nextInt(1) == 0) {
+                    xCoordsChange = 3;
+                } else {
+                    xCoordsChange = -3;
+                }
+                for (Zombie zombie : zombies) {
+                    if ((zombie.getCoords()[0] >= coordinates[0] + xCoordsChange - 2) && (zombie.getCoords()[0] <= coordinates[0] + xCoordsChange + 2) && (zombie.getCoords()[1] >= coordinates[1] - 2) && (zombie.getCoords()[1] <= coordinates[1] + 2)) {
+                        zombieNearby = true;
+                    }
+                }
+                if (!zombieNearby && (coordinates[0] + xCoordsChange >= 0) && (coordinates[0] + xCoordsChange <= 29)) {
+                    coordinates[0] = coordinates[0] + xCoordsChange;
+                    break;
+                }
+            } else {
+                if (rndm.nextInt(1) == 0) {
+                    if (rndm.nextInt(1) == 0) {
+                        yCoordsChange = 3;
+                    } else {
+                        yCoordsChange = -3;
+                    }
+                }
+                for (Zombie zombie : zombies) {
+                    if ((zombie.getCoords()[0] >= coordinates[0] - 2) && (zombie.getCoords()[0] <= coordinates[0] + 2) && (zombie.getCoords()[1] >= coordinates[1] + yCoordsChange - 2) && (zombie.getCoords()[1] <= coordinates[1] + yCoordsChange + 2)) {
+                        zombieNearby = true;
+                    }
+                }
+                if (!zombieNearby && (coordinates[1] + yCoordsChange >= 0) && (coordinates[1] + yCoordsChange <= 29)) {
+                    coordinates[1] = coordinates[1] + yCoordsChange;
+                    break;
+                }
+            }
+        }
+
+        if (coordinates[0] + 3 <= 29) {
+            coordinates[0] = coordinates[0] + 2;
+        } else if (coordinates[0] - 3 >= 0) {
+            coordinates[0] = coordinates[0] - 2;
+        }
     }
-
 }
