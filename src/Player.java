@@ -1,3 +1,5 @@
+import java.util.HashSet;
+import java.util.Random;
 import java.util.Scanner;
 
 /**
@@ -87,4 +89,10 @@ public class Player extends Entities {
      *
      */
     public void setMoves(int moves) { this.moves = moves; }
+
+    public void setCoords(HashSet<Zombie> zombies) {
+        Random rndm = new Random();
+
+    }
+
 }

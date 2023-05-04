@@ -27,7 +27,13 @@ public class GameSim {
             while (player.getMoves() < 3) {
                 if (player.makeTurn()) {
                     player.playerMove();
-
+                    if (mechanics.zombieTouchingPlayer(player, zombies)) {
+                        player.setLives(player.getLives() - 1);
+                        if (player.getLives() == 0) {
+                            break;
+                        }
+                        player.setCoords(zombies);
+                    }
                 }
                 else {
                     Bullet bullet = new Bullet(player.getCoords(), player.getDirection());
@@ -39,7 +45,10 @@ public class GameSim {
                         }
                     }
                 }
+                player.setMoves(player.getMoves() + 1);
+                board.printBoard(zombies, player);
             }
+
         }
     }
 
