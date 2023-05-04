@@ -44,7 +44,31 @@ public class Zombie extends Entities {
      * Method which has the zombie move towards the player (zombies will have access to player coordinates as a
      * reference at each turn)
      */
-    public void zombieMove() {}
+    public void zombieMove(Player p) {
+        Random rand = new Random();
+        int[] coords = p.getCoords();
+        moves = 3;
+        while(moves > 0) {
+            if((rand.nextInt(0,2) == 1) && (coords[0] > coordinates[0])) {
+                coordinates[0] += 1;
+                moves--;
+            }
+            else if((rand.nextInt(0,2) == 1) && (coords[0] < coordinates[0])) {
+                coordinates[0] -= 1;
+                moves--;
+            }
+            else if((rand.nextInt(0,2) == 0) && (coords[1] > coordinates[1])) {
+                coordinates[1] += 1;
+                moves--;
+            }
+            else {
+                coordinates[1] -= 1;
+                moves--;
+            }
+        }
+
+
+    }
 
     /**
      * Getter method for the positional coordinates of a zombie

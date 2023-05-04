@@ -87,4 +87,5 @@ public class Player extends Entities {
      *
      */
     public void setMoves(int moves) { this.moves = moves; }
+
 }

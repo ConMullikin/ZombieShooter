@@ -4,7 +4,7 @@
 public class GeneralStats {
 
     /**
-     * Integer value which keeps tracvk of the current turn
+     * Integer value which keeps track of the current turn
      */
     private int turnCounter = 0;
 
