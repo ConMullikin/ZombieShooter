@@ -52,10 +52,8 @@ public class Player extends Entities {
             char input = scn.next().toUpperCase().charAt(0);
 
             if (input == 'M') {
-                moves++;
                 return true;
             } else if (input == 'S') {
-                moves++;
                 return false;
             }
             System.out.println("Incorrect input received, try again.");
@@ -100,12 +98,45 @@ public class Player extends Entities {
                 }
                 System.out.println("Can't move player there because you would be out of bounds. Please try again.");
             } else {
-                System.out.println("Not a legitimate move. Please try again.");
+                System.out.println("Invalid move. Please try again.");
             }
         }
 
         while (!inputReceived) {
+            System.out.println("Press L or R to face left or right, U or D to face up or down, or a combination of the left or right and up or down such as LU and RD.");
+            String input = scn.next().toUpperCase();
 
+            if (input.equals("L")) {
+                direction[0] = -1;
+                break;
+            } else if (input.equals("R")) {
+                direction[0] = 1;
+                break;
+            } else if (input.equals("U")) {
+                direction[1] = 1;
+                break;
+            } else if (input.equals("D")) {
+                direction[1] = -1;
+                break;
+            } else if (input.equals("LU")) {
+                direction[0] = -1;
+                direction[1] = 1;
+                break;
+            } else if (input.equals("LD")) {
+                direction[0] = -1;
+                direction[1] = -1;
+                break;
+            } else if (input.equals("RU")) {
+                direction[0] = 1;
+                direction[1] = 1;
+                break;
+            } else if (input.equals("RD")) {
+                direction[0] = 1;
+                direction[1] = -1;
+                break;
+            } else {
+                System.out.println("Invalid direction. Please try again.");
+            }
         }
     }
 
