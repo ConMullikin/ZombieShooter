@@ -9,7 +9,6 @@ public class DamageMechanics {
      * and moves the bullet in the direction the player is facing if not
      * @param bullet
      * @param zombies
-     * @param player
      * @return
      */
     public HashSet<Zombie> bulletTouchingZombie(Bullet bullet, HashSet<Zombie> zombies) {

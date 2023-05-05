@@ -10,10 +10,7 @@ public class Zombie extends Entities {
      * Tracks the number of moves a zombie has left in a given turn
      */
     private int moves;
-    /**
-     * Tracks the number of lives a zombie entity has left
-     */
-    private int lives;
+
     /**
      * Tracks the zombie's position in the 2-D array (i.e. on the board)
      */
@@ -24,7 +21,6 @@ public class Zombie extends Entities {
      */
     public Zombie(HashSet<Zombie> zombies) {
         moves = 0;
-        lives = 1;
 
         ArrayList<int[]> coordinates = new ArrayList<>();
         for (Zombie zombie: zombies) {
