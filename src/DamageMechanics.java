@@ -31,7 +31,6 @@ public class DamageMechanics {
     public boolean zombieTouchingPlayer(Player player, HashSet<Zombie> zombies) {
         for (Zombie zombie : zombies) {
             if (player.getCoords()[0] == zombie.getCoords()[0] && player.getCoords()[1] == zombie.getCoords()[1]) {
-                zombies.remove(zombie);
                 return true;
             }
         }

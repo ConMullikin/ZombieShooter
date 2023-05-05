@@ -24,4 +24,10 @@ public abstract class Entities extends GeneralStats {
     public int getLives() { return lives; }
 
     public void setLives(int lives) { this.lives = lives; }
+
+    public int getMoves() { return moves; }
+
+    public void setMoves(int moves) { this.moves = moves; }
+
+
 }

@@ -20,18 +20,41 @@ public class Zombie extends Entities {
      * Constructor which instantiates an instance of a zombie
      */
     public Zombie(HashSet<Zombie> zombies) {
-        moves = 0;
-
-        ArrayList<int[]> coordinates = new ArrayList<>();
-        for (Zombie zombie: zombies) {
-            coordinates.add(zombie.getCoords());
-        }
+        moves = 3;
 
         boolean coordsAdded = false;
+        boolean spaceAvailable;
+        int xValue = 0;
+        int yValue = 0;
         Random rndm = new Random();
-        while (!coordsAdded) {
-            if(rndm.nextInt(0,1) == 0) {
 
+        while (!coordsAdded) {
+            spaceAvailable = true;
+
+            if (rndm.nextInt(0,4) == 0) {
+                coordinates[0] = rndm.nextInt(30);
+                coordinates[1] = 0;
+            }
+            if (rndm.nextInt(0,4) == 1) {
+                coordinates[0] = rndm.nextInt(30);
+                coordinates[1] = 9;
+            }
+            if (rndm.nextInt(0,4) == 2) {
+                coordinates[0] = 0;
+                coordinates[1] = rndm.nextInt(10);
+            }
+            if (rndm.nextInt(0,4) == 3) {
+                coordinates[0] = 29;
+                coordinates[1] = rndm.nextInt(10);
+            }
+            for (Zombie zombie : zombies) {
+                if (zombie.getCoords()[0] == coordinates[0] && zombie.getCoords()[1] == coordinates[1]) {
+                    spaceAvailable = false;
+                    break;
+                }
+            }
+            if (spaceAvailable) {
+                break;
             }
         }
     }

@@ -24,7 +24,7 @@ public class GameSim {
         zombies = zombieGeneration();
 
         while(player.getLives() > 0 && zombiesSpawn.size() > 0) {
-            while (player.getMoves() < 3) {
+            while (player.getMoves() > 0) {
                 if (player.makeTurn()) {
                     player.playerMove();
                     if (mechanics.zombieTouchingPlayer(player, zombies)) {
@@ -45,10 +45,15 @@ public class GameSim {
                         }
                     }
                 }
-                player.setMoves(player.getMoves() + 1);
+                player.setMoves(player.getMoves() - 1);
                 board.printBoard(zombies, player);
             }
-
+            for (Zombie zombie : zombies) {
+                while (zombie.getMoves() > 0) {
+                    zombie.zombieMove(player);
+                }
+            }
+            board.printBoard(zombies, player);
         }
     }
 

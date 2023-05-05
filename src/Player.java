@@ -49,7 +49,7 @@ public class Player extends Entities {
 
         while (!inputReceived) {
             System.out.println("Press M if you wish to move and S if you wish to shoot.");
-            char input = scn.next().charAt(0);
+            char input = scn.next().toUpperCase().charAt(0);
 
             if (input == 'M') {
                 moves++;
@@ -68,8 +68,45 @@ public class Player extends Entities {
      * as well as change the direction that they are facing
      */
     public void playerMove() {
-        System.out.println("Press L to move left, R to move right, U to move up, and D to move down.");
+        Scanner scn = new Scanner(System.in);
+        boolean inputReceived = false;
 
+        while (!inputReceived) {
+            System.out.println("Press L to move left, R to move right, U to move up, and D to move down.");
+            char input = scn.next().toUpperCase().charAt(0);
+
+            if (input == 'L') {
+                if (coordinates[0] - 1 >= 0) {
+                    coordinates[0] -= 1;
+                    break;
+                }
+                System.out.println("Can't move player there because you would be out of bounds. Please try again.");
+            } else if (input == 'R') {
+                if (coordinates[0] + 1 <= 29) {
+                    coordinates[0] += 1;
+                    break;
+                }
+                System.out.println("Can't move player there because you would be out of bounds. Please try again.");
+            } else if (input == 'U') {
+                if (coordinates[1] + 1 <= 29) {
+                    coordinates[1] += 1;
+                    break;
+                }
+                System.out.println("Can't move player there because you would be out of bounds. Please try again.");
+            } else if (input == 'D') {
+                if (coordinates[1] - 1 >= 0) {
+                    coordinates[1] -= 1;
+                    break;
+                }
+                System.out.println("Can't move player there because you would be out of bounds. Please try again.");
+            } else {
+                System.out.println("Not a legitimate move. Please try again.");
+            }
+        }
+
+        while (!inputReceived) {
+
+        }
     }
 
     /**
@@ -79,19 +116,6 @@ public class Player extends Entities {
     public int[] getDirection() { return direction; }
 
     /**
-     * Returns amount of moves player has used during their turn
-     * @return
-     */
-    public int getMoves() { return moves; }
-
-    /**
-     * Returns amount of moves player has used during their turn
-     *
-     */
-    public void setMoves(int moves) { this.moves = moves; }
-
-
-    /**
      * Randomly sets the coordinates of a player after being hit by zombie to be a position a few units more away from zombies
      * @param zombies
      */
@@ -99,41 +123,41 @@ public class Player extends Entities {
         Random rndm = new Random();
         boolean zombieNearby;
         boolean coordsSet = false;
-        int xCoordsChange = 0;
-        int yCoordsChange = 0;
+        int coordsChange = 0;
 
         while (!coordsSet) {
             zombieNearby = false;
-            if (rndm.nextInt(1) == 0) {
-                if (rndm.nextInt(1) == 0) {
-                    xCoordsChange = 3;
+
+            if (rndm.nextInt(2) == 0) {
+                if (rndm.nextInt(2) == 0) {
+                    coordsChange = 3;
                 } else {
-                    xCoordsChange = -3;
+                    coordsChange = -3;
                 }
                 for (Zombie zombie : zombies) {
-                    if ((zombie.getCoords()[0] >= coordinates[0] + xCoordsChange - 2) && (zombie.getCoords()[0] <= coordinates[0] + xCoordsChange + 2) && (zombie.getCoords()[1] >= coordinates[1] - 2) && (zombie.getCoords()[1] <= coordinates[1] + 2)) {
+                    if ((zombie.getCoords()[0] >= coordinates[0] + coordsChange - 2) && (zombie.getCoords()[0] <= coordinates[0] + coordsChange + 2) && (zombie.getCoords()[1] >= coordinates[1] - 2) && (zombie.getCoords()[1] <= coordinates[1] + 2)) {
                         zombieNearby = true;
                     }
                 }
-                if (!zombieNearby && (coordinates[0] + xCoordsChange >= 0) && (coordinates[0] + xCoordsChange <= 29)) {
-                    coordinates[0] = coordinates[0] + xCoordsChange;
+                if (!zombieNearby && (coordinates[0] + coordsChange >= 0) && (coordinates[0] + coordsChange <= 29)) {
+                    coordinates[0] = coordinates[0] + coordsChange;
                     break;
                 }
             } else {
-                if (rndm.nextInt(1) == 0) {
-                    if (rndm.nextInt(1) == 0) {
-                        yCoordsChange = 3;
+                if (rndm.nextInt(2) == 0) {
+                    if (rndm.nextInt(2) == 0) {
+                        coordsChange = 3;
                     } else {
-                        yCoordsChange = -3;
+                        coordsChange = -3;
                     }
                 }
                 for (Zombie zombie : zombies) {
-                    if ((zombie.getCoords()[0] >= coordinates[0] - 2) && (zombie.getCoords()[0] <= coordinates[0] + 2) && (zombie.getCoords()[1] >= coordinates[1] + yCoordsChange - 2) && (zombie.getCoords()[1] <= coordinates[1] + yCoordsChange + 2)) {
+                    if ((zombie.getCoords()[0] >= coordinates[0] - 2) && (zombie.getCoords()[0] <= coordinates[0] + 2) && (zombie.getCoords()[1] >= coordinates[1] + coordsChange - 2) && (zombie.getCoords()[1] <= coordinates[1] + coordsChange + 2)) {
                         zombieNearby = true;
                     }
                 }
-                if (!zombieNearby && (coordinates[1] + yCoordsChange >= 0) && (coordinates[1] + yCoordsChange <= 29)) {
-                    coordinates[1] = coordinates[1] + yCoordsChange;
+                if (!zombieNearby && (coordinates[1] + coordsChange >= 0) && (coordinates[1] + coordsChange <= 29)) {
+                    coordinates[1] = coordinates[1] + coordsChange;
                     break;
                 }
             }
@@ -141,7 +165,7 @@ public class Player extends Entities {
 
         if (coordinates[0] + 3 <= 29) {
             coordinates[0] = coordinates[0] + 2;
-        } else if (coordinates[0] - 3 >= 0) {
+        } else {
             coordinates[0] = coordinates[0] - 2;
         }
     }
