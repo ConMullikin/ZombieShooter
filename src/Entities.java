@@ -15,7 +15,7 @@ public abstract class Entities extends GeneralStats {
      * Getter which returns the entity's position in the 2-D array
      * @return the coordinates of the entity's position in the matrix
      */
-    public int[] getCoords() { return coordinates; }
+    public int[] getCoords() { return this.coordinates; }
 
     public int getMoves() { return moves; }
 

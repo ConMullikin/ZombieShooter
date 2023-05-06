@@ -118,19 +118,19 @@ public class Player extends Entities {
             } else if (input.equals("D")) {
                 direction[1] = -1;
                 break;
-            } else if (input.equals("LU")) {
+            } else if (input.equals("LU") || input.equals("UL")) {
                 direction[0] = -1;
                 direction[1] = 1;
                 break;
-            } else if (input.equals("LD")) {
+            } else if (input.equals("LD") || input.equals("DL")) {
                 direction[0] = -1;
                 direction[1] = -1;
                 break;
-            } else if (input.equals("RU")) {
+            } else if (input.equals("RU") || input.equals("UR")) {
                 direction[0] = 1;
                 direction[1] = 1;
                 break;
-            } else if (input.equals("RD")) {
+            } else if (input.equals("RD") || input.equals("DR")) {
                 direction[0] = 1;
                 direction[1] = -1;
                 break;
