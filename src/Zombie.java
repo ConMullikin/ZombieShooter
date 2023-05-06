@@ -72,10 +72,11 @@ public class Zombie extends GeneralStats {
         int[] coords = p.getCoords();
         moves = 3;
         boolean touchingZombie;
+        int randNum = rand.nextInt(2);
 
         while(moves > 0) {
             touchingZombie = false;
-            if((rand.nextInt(0,2) == 1) && (coords[0] > coordinates[0])) {
+            if((randNum == 0) && (coords[0] > coordinates[0])) {
                 for (Zombie zombie : zombies) {
                     if ((zombie.getCoords()[0] == coordinates[0] + 1) && (zombie.getCoords()[1] == coordinates[1])) {
                         touchingZombie = true;
@@ -87,7 +88,7 @@ public class Zombie extends GeneralStats {
                     moves--;
                 }
             }
-            else if((rand.nextInt(0,2) == 1) && (coords[0] < coordinates[0])) {
+            else if((randNum == 0) && (coords[0] < coordinates[0])) {
                 for (Zombie zombie : zombies) {
                     if ((zombie.getCoords()[0] == coordinates[0] - 1) && (zombie.getCoords()[1] == coordinates[1])) {
                         touchingZombie = true;
@@ -99,7 +100,7 @@ public class Zombie extends GeneralStats {
                     moves--;
                 }
             }
-            else if((rand.nextInt(0,2) == 0) && (coords[1] > coordinates[1])) {
+            else if((randNum == 1) && (coords[1] > coordinates[1])) {
                 for (Zombie zombie : zombies) {
                     if ((zombie.getCoords()[0] == coordinates[0]) && (zombie.getCoords()[1] == coordinates[1] + 1)) {
                         touchingZombie = true;
@@ -111,7 +112,7 @@ public class Zombie extends GeneralStats {
                     moves--;
                 }
             }
-            else if ((rand.nextInt(0,2) == 0) && (coords[1] < coordinates[1])) {
+            else if ((randNum == 1) && (coords[1] < coordinates[1])) {
                 for (Zombie zombie : zombies) {
                     if ((zombie.getCoords()[0] == coordinates[0]) && (zombie.getCoords()[1] == coordinates[1] - 1)) {
                         touchingZombie = true;
@@ -121,6 +122,19 @@ public class Zombie extends GeneralStats {
                 if (!touchingZombie) {
                     coordinates[1] -= 1;
                     moves--;
+                }
+            } else {
+                if (coordinates[0] > coords[0]) {
+                    coordinates[0] = coordinates[0] - 2;
+                }
+                else if (coordinates[0] < coords[0]) {
+                    coordinates[0] = coordinates[0] + 2;
+                }
+                else if (coordinates[1] > coords[1]) {
+                    coordinates[0] = coordinates[0] - 2;
+                }
+                else {
+                    coordinates[0] = coordinates[0] + 2;
                 }
             }
         }
