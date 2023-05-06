@@ -19,10 +19,6 @@ public class Player extends GeneralStats {
      */
     private int[] direction = new int[2];
     /**
-     * Tracks the number of times fired by the player in a given turn
-     */
-    private int timesFired;
-    /**
      * Tracks the position of the player in the 2D array
      */
     private int[] coordinates = new int[2];
@@ -35,7 +31,7 @@ public class Player extends GeneralStats {
         coordinates[1] = 5;
         moves = 3;
         lives = 3;
-        direction[0] = 0;
+        direction[0] = 1;
         direction[1] = 0;
     }
 
@@ -108,14 +104,18 @@ public class Player extends GeneralStats {
 
             if (input.equals("L")) {
                 direction[0] = -1;
+                direction[1] = 0;
                 break;
             } else if (input.equals("R")) {
                 direction[0] = 1;
+                direction[1] = 0;
                 break;
             } else if (input.equals("U")) {
+                direction[0] = 0;
                 direction[1] = -1;
                 break;
             } else if (input.equals("D")) {
+                direction[0] = 0;
                 direction[1] = 1;
                 break;
             } else if (input.equals("LU") || input.equals("UL")) {

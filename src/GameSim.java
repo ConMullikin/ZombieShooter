@@ -8,7 +8,7 @@ public class GameSim {
     /**
      * Holds all the zombies currently at play in a HashSet
      */
-    HashSet<Zombie> zombies;
+    HashSet<Zombie> zombies = new HashSet<>();
     /**
      * Queue that stores the amount of zombies spawned in each following wave
      */
@@ -39,16 +39,11 @@ public class GameSim {
                 }
                 else {
                     Bullet bullet = new Bullet(player.getCoords(), player.getDirection());
-                    while (bullet.getBulletCoords()[0] < 29 && bullet.getBulletCoords()[0] > 0 && bullet.getBulletCoords()[1] < 9 && bullet.getBulletCoords()[1] > 0) {
+                    while (bullet.getBulletCoords()[0] <= 29 && bullet.getBulletCoords()[0] >= 0 && bullet.getBulletCoords()[1] <= 9 && bullet.getBulletCoords()[1] >= 0) {
                         bullet.moveBullet();
-                        HashSet<Zombie> newZombies = mechanics.bulletTouchingZombie(bullet, zombies);
-                        if (zombies.size() != newZombies.size()) {
-                            zombies = newZombies;
-                            genStats.setKills(genStats.getKills() + 1);
-                            if (zombies.size() == 0) {
-                                zombies = zombieGeneration();
-                            }
-                            break;
+                        mechanics.bulletTouchingZombie(bullet, zombies);
+                        if (zombies.isEmpty()) {
+                            zombies = zombieGeneration();
                         }
                     }
                 }
@@ -77,10 +72,9 @@ public class GameSim {
      * @return the new HashSet
      */
     public HashSet<Zombie> zombieGeneration() {
-        HashSet<Zombie> zombies = new HashSet<>();
         int numZombies = zombiesSpawn.remove();
 
-        for (int i = 0; i < numZombies; i++) {
+        while (zombies.size() < numZombies) {
             Zombie zombie = new Zombie(zombies);
             zombies.add(zombie);
         }

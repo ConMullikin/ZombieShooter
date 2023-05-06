@@ -1,4 +1,3 @@
-import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.Random;
 
@@ -44,10 +43,12 @@ public class Zombie extends GeneralStats {
                 coordinates[0] = 29;
                 coordinates[1] = rndm.nextInt(10);
             }
-            for (Zombie zombie : zombies) {
-                if (zombie.getCoords()[0] == coordinates[0] && zombie.getCoords()[1] == coordinates[1]) {
-                    spaceAvailable = false;
-                    break;
+            if (!zombies.isEmpty()) {
+                for (Zombie zombie : zombies) {
+                    if (zombie.getCoords()[0] == coordinates[0] && zombie.getCoords()[1] == coordinates[1]) {
+                        spaceAvailable = false;
+                        break;
+                    }
                 }
             }
             if (spaceAvailable) {

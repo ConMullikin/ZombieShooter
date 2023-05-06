@@ -3,10 +3,6 @@
  */
 public class Bullet {
     /**
-     * Max amount that a player is able to shoot
-     */
-    private final double fireRate = 3;
-    /**
      * Stores x and y coordinates of bullet
      */
     private int[] bulletCoordinates = new int[2];
