@@ -5,7 +5,7 @@ import java.util.Scanner;
 /**
  * Class which contains all the information (i.e. variables and methods) relevant to the player for gameplay
  */
-public class Player extends Entities {
+public class Player extends GeneralStats {
     /**
      * Tracks the number of moves the player has left in a given turn
      */
@@ -31,8 +31,8 @@ public class Player extends Entities {
      * Constructor which instantiates a player instance and assigns all class variable with initial values
      */
     public Player() {
-        coordinates[0] = 5;
-        coordinates[1] = 15;
+        coordinates[0] = 15;
+        coordinates[1] = 5;
         moves = 3;
         lives = 3;
         direction[0] = 0;
@@ -86,14 +86,14 @@ public class Player extends Entities {
                 }
                 System.out.println("Can't move player there because you would be out of bounds. Please try again.");
             } else if (input == 'U') {
-                if (coordinates[1] + 1 <= 29) {
-                    coordinates[1] += 1;
+                if (coordinates[1] - 1 <= 29) {
+                    coordinates[1] -= 1;
                     break;
                 }
                 System.out.println("Can't move player there because you would be out of bounds. Please try again.");
             } else if (input == 'D') {
-                if (coordinates[1] - 1 >= 0) {
-                    coordinates[1] -= 1;
+                if (coordinates[1] + 1 >= 0) {
+                    coordinates[1] += 1;
                     break;
                 }
                 System.out.println("Can't move player there because you would be out of bounds. Please try again.");
@@ -113,26 +113,26 @@ public class Player extends Entities {
                 direction[0] = 1;
                 break;
             } else if (input.equals("U")) {
-                direction[1] = 1;
+                direction[1] = -1;
                 break;
             } else if (input.equals("D")) {
-                direction[1] = -1;
+                direction[1] = 1;
                 break;
             } else if (input.equals("LU") || input.equals("UL")) {
                 direction[0] = -1;
-                direction[1] = 1;
+                direction[1] = -1;
                 break;
             } else if (input.equals("LD") || input.equals("DL")) {
                 direction[0] = -1;
-                direction[1] = -1;
+                direction[1] = 1;
                 break;
             } else if (input.equals("RU") || input.equals("UR")) {
                 direction[0] = 1;
-                direction[1] = 1;
+                direction[1] = -1;
                 break;
             } else if (input.equals("RD") || input.equals("DR")) {
                 direction[0] = 1;
-                direction[1] = -1;
+                direction[1] = 1;
                 break;
             } else {
                 System.out.println("Invalid direction. Please try again.");
@@ -157,6 +157,16 @@ public class Player extends Entities {
      * @param lives
      */
     public void setLives(int lives) { this.lives = lives; }
+
+    /**
+     * Getter which returns the entity's position in the 2-D array
+     * @return the coordinates of the entity's position in the matrix
+     */
+    public int[] getCoords() { return this.coordinates; }
+
+    public int getMoves() { return moves; }
+
+    public void setMoves(int moves) { this.moves = moves; }
 
     /**
      * Randomly sets the coordinates of a player after being hit by zombie to be a position a few units more away from zombies

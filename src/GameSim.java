@@ -23,8 +23,9 @@ public class GameSim {
         Player player = new Player();
         DamageMechanics mechanics = new DamageMechanics();
         zombies = zombieGeneration();
+        board.printBoard(zombies, player);
 
-        while(player.getLives() > 0 && zombiesSpawn.size() > 0) {
+        while(player.getLives() > 0 && !zombiesSpawn.isEmpty()) {
             while (player.getMoves() > 0) {
                 if (player.makeTurn()) {
                     player.playerMove();
@@ -38,7 +39,8 @@ public class GameSim {
                 }
                 else {
                     Bullet bullet = new Bullet(player.getCoords(), player.getDirection());
-                    while (bullet.getBulletCoords()[0] <= 29 && bullet.getBulletCoords()[0] >= 0 && bullet.getBulletCoords()[1] <= 9 && bullet.getBulletCoords()[1] >= 0) {
+                    while (bullet.getBulletCoords()[0] < 29 && bullet.getBulletCoords()[0] > 0 && bullet.getBulletCoords()[1] < 9 && bullet.getBulletCoords()[1] > 0) {
+                        bullet.moveBullet();
                         HashSet<Zombie> newZombies = mechanics.bulletTouchingZombie(bullet, zombies);
                         if (zombies.size() != newZombies.size()) {
                             zombies = newZombies;
@@ -51,13 +53,16 @@ public class GameSim {
                     }
                 }
                 player.setMoves(player.getMoves() - 1);
-                board.printBoard(zombies, player);
+                if (player.getMoves() != 0) {
+                    board.printBoard(zombies, player);
+                }
             }
             genStats.setTurns(genStats.getTurns() + 1);
             for (Zombie zombie : zombies) {
                 zombie.zombieMove(player, zombies);
             }
             board.printBoard(zombies, player);
+            player.setMoves(3);
         }
         if (player.getLives() > 0) {
             System.out.println("Congrats, you win!");
@@ -73,7 +78,9 @@ public class GameSim {
      */
     public HashSet<Zombie> zombieGeneration() {
         HashSet<Zombie> zombies = new HashSet<>();
-        for (int i = 0; i < zombiesSpawn.remove(); i++) {
+        int numZombies = zombiesSpawn.remove();
+
+        for (int i = 0; i < numZombies; i++) {
             Zombie zombie = new Zombie(zombies);
             zombies.add(zombie);
         }

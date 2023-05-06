@@ -5,7 +5,7 @@ import java.util.Random;
 /**
  * Class which contains all the statistics and relevant methods for a Zombie entity
  */
-public class Zombie extends Entities {
+public class Zombie extends GeneralStats {
     /**
      * Tracks the number of moves a zombie has left in a given turn
      */
@@ -57,6 +57,12 @@ public class Zombie extends Entities {
     }
 
     /**
+     * Getter which returns the entity's position in the 2-D array
+     * @return the coordinates of the entity's position in the matrix
+     */
+    public int[] getCoords() { return this.coordinates; }
+
+    /**
      * Method which has the zombie move towards the player (zombies will have access to player coordinates as a
      * reference at each turn)
      */
@@ -104,7 +110,7 @@ public class Zombie extends Entities {
                     moves--;
                 }
             }
-            else {
+            else if ((rand.nextInt(0,2) == 0) && (coords[1] < coordinates[1])) {
                 for (Zombie zombie : zombies) {
                     if ((zombie.getCoords()[0] == coordinates[0]) && (zombie.getCoords()[1] == coordinates[1] - 1)) {
                         touchingZombie = true;
