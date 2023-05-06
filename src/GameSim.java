@@ -19,6 +19,7 @@ public class GameSim {
      */
     public void gameSim() {
         Board board = new Board();
+        GeneralStats genStats = new GeneralStats();
         Player player = new Player();
         DamageMechanics mechanics = new DamageMechanics();
         zombies = zombieGeneration();
@@ -41,6 +42,10 @@ public class GameSim {
                         HashSet<Zombie> newZombies = mechanics.bulletTouchingZombie(bullet, zombies);
                         if (zombies.size() != newZombies.size()) {
                             zombies = newZombies;
+                            genStats.setKills(genStats.getKills() + 1);
+                            if (zombies.size() == 0) {
+                                zombies = zombieGeneration();
+                            }
                             break;
                         }
                     }
@@ -48,13 +53,18 @@ public class GameSim {
                 player.setMoves(player.getMoves() - 1);
                 board.printBoard(zombies, player);
             }
+            genStats.setTurns(genStats.getTurns() + 1);
             for (Zombie zombie : zombies) {
-                while (zombie.getMoves() > 0) {
-                    zombie.zombieMove(player);
-                }
+                zombie.zombieMove(player, zombies);
             }
             board.printBoard(zombies, player);
         }
+        if (player.getLives() > 0) {
+            System.out.println("Congrats, you win!");
+        } else {
+            System.out.println("Sorry, you lose!");
+        }
+        System.out.println("You lasted " + genStats.getTurns() + " turns and killed " + genStats.getKills() + " zombies.");
     }
 
     /**

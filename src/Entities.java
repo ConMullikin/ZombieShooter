@@ -7,10 +7,6 @@ public abstract class Entities extends GeneralStats {
      */
     private int moves;
     /**
-     * Number of lives that entity has left
-     */
-    private int lives;
-    /**
      * Tracks the position of the entity in the 2D array
      */
     private int[] coordinates = new int[2];
@@ -20,10 +16,6 @@ public abstract class Entities extends GeneralStats {
      * @return the coordinates of the entity's position in the matrix
      */
     public int[] getCoords() { return coordinates; }
-
-    public int getLives() { return lives; }
-
-    public void setLives(int lives) { this.lives = lives; }
 
     public int getMoves() { return moves; }
 

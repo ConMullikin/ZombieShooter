@@ -147,6 +147,18 @@ public class Player extends Entities {
     public int[] getDirection() { return direction; }
 
     /**
+     * Returns player's number of lives left
+     * @return
+     */
+    public int getLives() { return lives; }
+
+    /**
+     * Sets player's number of lives left
+     * @param lives
+     */
+    public void setLives(int lives) { this.lives = lives; }
+
+    /**
      * Randomly sets the coordinates of a player after being hit by zombie to be a position a few units more away from zombies
      * @param zombies
      */

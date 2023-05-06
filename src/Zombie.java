@@ -24,13 +24,10 @@ public class Zombie extends Entities {
 
         boolean coordsAdded = false;
         boolean spaceAvailable;
-        int xValue = 0;
-        int yValue = 0;
         Random rndm = new Random();
 
         while (!coordsAdded) {
             spaceAvailable = true;
-
             if (rndm.nextInt(0,4) == 0) {
                 coordinates[0] = rndm.nextInt(30);
                 coordinates[1] = 0;
@@ -63,30 +60,63 @@ public class Zombie extends Entities {
      * Method which has the zombie move towards the player (zombies will have access to player coordinates as a
      * reference at each turn)
      */
-    public void zombieMove(Player p) {
+    public void zombieMove(Player p, HashSet<Zombie> zombies) {
         Random rand = new Random();
         int[] coords = p.getCoords();
         moves = 3;
+        boolean touchingZombie;
+
         while(moves > 0) {
+            touchingZombie = false;
             if((rand.nextInt(0,2) == 1) && (coords[0] > coordinates[0])) {
-                coordinates[0] += 1;
-                moves--;
+                for (Zombie zombie : zombies) {
+                    if ((zombie.getCoords()[0] == coordinates[0] + 1) && (zombie.getCoords()[1] == coordinates[1])) {
+                        touchingZombie = true;
+                        break;
+                    }
+                }
+                if (!touchingZombie) {
+                    coordinates[0] += 1;
+                    moves--;
+                }
             }
             else if((rand.nextInt(0,2) == 1) && (coords[0] < coordinates[0])) {
-                coordinates[0] -= 1;
-                moves--;
+                for (Zombie zombie : zombies) {
+                    if ((zombie.getCoords()[0] == coordinates[0] - 1) && (zombie.getCoords()[1] == coordinates[1])) {
+                        touchingZombie = true;
+                        break;
+                    }
+                }
+                if (!touchingZombie) {
+                    coordinates[0] -= 1;
+                    moves--;
+                }
             }
             else if((rand.nextInt(0,2) == 0) && (coords[1] > coordinates[1])) {
-                coordinates[1] += 1;
-                moves--;
+                for (Zombie zombie : zombies) {
+                    if ((zombie.getCoords()[0] == coordinates[0]) && (zombie.getCoords()[1] == coordinates[1] + 1)) {
+                        touchingZombie = true;
+                        break;
+                    }
+                }
+                if (!touchingZombie) {
+                    coordinates[1] += 1;
+                    moves--;
+                }
             }
             else {
-                coordinates[1] -= 1;
-                moves--;
+                for (Zombie zombie : zombies) {
+                    if ((zombie.getCoords()[0] == coordinates[0]) && (zombie.getCoords()[1] == coordinates[1] - 1)) {
+                        touchingZombie = true;
+                        break;
+                    }
+                }
+                if (!touchingZombie) {
+                    coordinates[1] -= 1;
+                    moves--;
+                }
             }
         }
-
-
     }
 
     /**

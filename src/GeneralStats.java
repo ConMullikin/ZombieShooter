@@ -19,9 +19,17 @@ public class GeneralStats {
      */
     public int getTurns() { return turnCounter; }
 
+    public void setTurns(int turnCounter) { this.turnCounter = turnCounter; }
+
     /**
      * Getter method for the private class variable killCounter
      * @return the current value of the class variable killCounter
      */
     public int getKills() { return killCounter; }
+
+    /**
+     * Sets amount of kills player has
+     * @return the current value of the class variable killCounter
+     */
+    public void setKills(int killCounter) { this.killCounter = killCounter; }
 }
