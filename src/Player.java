@@ -1,4 +1,5 @@
 import java.util.HashSet;
+import java.util.Objects;
 import java.util.Random;
 import java.util.Scanner;
 
@@ -39,22 +40,19 @@ public class Player extends GeneralStats {
      * Inherited by the Entities class, this method will formulate a turn for the player based on user input
      * and recreation in the GameSim() class
      */
-    public boolean makeTurn() {
+    public String makeTurn() {
         Scanner scn = new Scanner(System.in);
         boolean inputReceived = false;
 
+        System.out.println("Press M to move, S to shoot, and D to change direction.");
         while (!inputReceived) {
-            System.out.println("Press M if you wish to move and S if you wish to shoot.");
-            char input = scn.next().toUpperCase().charAt(0);
-
-            if (input == 'M') {
-                return true;
-            } else if (input == 'S') {
-                return false;
+            String input = scn.next().toUpperCase();
+            if (Objects.equals(input, "M") || Objects.equals(input, "S") || Objects.equals(input, "D")) {
+                return input;
             }
             System.out.println("Incorrect input received, try again.");
         }
-        return false;
+        return "M";
     }
 
     /**
@@ -65,83 +63,42 @@ public class Player extends GeneralStats {
         Scanner scn = new Scanner(System.in);
         boolean inputReceived = false;
 
+        System.out.println("Press L or R to move left or right, U or D to move up or down, or a combination of left or right and up or down such as LU and RD.");
         while (!inputReceived) {
-            System.out.println("Press L or R to move left or right, U or D to move up or down, or a combination of left or right and up or down such as LU and RD.");
             String input = scn.next().toUpperCase();
-
-            if (input.equals("L")) {
+            if (input.equals("L") && coordinates[0] - 1 >= 0) {
                 coordinates[0] = coordinates[0] - 1;
                 break;
-            } else if (input.equals("R")) {
+            } else if (input.equals("R") && coordinates[0] + 1 <= 29) {
                 coordinates[0] = coordinates[0] + 1;
                 break;
-            } else if (input.equals("U")) {
+            } else if (input.equals("U") && coordinates[1] - 1 >= 0) {
                 coordinates[1] = coordinates[1] - 1;
                 break;
-            } else if (input.equals("D")) {
+            } else if (input.equals("D") && coordinates[0] + 1 <= 29) {
                 coordinates[1] = coordinates[1] + 1;
                 break;
-            } else if (input.equals("LU") || input.equals("UL")) {
+            } else if ((input.equals("LU") || input.equals("UL")) && coordinates[0] - 1 >= 0 && coordinates[1] - 1 >= 0) {
                 coordinates[0] = coordinates[0] - 1;
                 coordinates[1] = coordinates[1] - 1;
                 break;
-            } else if (input.equals("LD") || input.equals("DL")) {
+            } else if ((input.equals("LD") || input.equals("DL")) && coordinates[0] - 1 >= 0 && coordinates[1] + 1 <= 9) {
                 coordinates[0] = coordinates[0] - 1;
                 coordinates[1] = coordinates[1] + 1;
                 break;
-            } else if (input.equals("RU") || input.equals("UR")) {
+            } else if ((input.equals("RU") || input.equals("UR")) && coordinates[0] + 1 <= 29 && coordinates[1] - 1 >= 0) {
                 coordinates[0] = coordinates[0] + 1;
                 coordinates[1] = coordinates[1] - 1;
                 break;
-            } else if (input.equals("RD") || input.equals("DR")) {
+            } else if ((input.equals("RD") || input.equals("DR")) && coordinates[0] + 1 <= 29 && coordinates[1] + 1 <= 9) {
                 coordinates[0] = coordinates[0] + 1;
                 coordinates[1] = coordinates[1] + 1;
                 break;
             } else {
-                System.out.println("Invalid direction. Please try again.");
+                System.out.println("Invalid move. Please try again.");
             }
         }
-
-        while (!inputReceived) {
-            System.out.println("Press L or R to face left or right, U or D to face up or down, or a combination of left or right and up or down such as LU and RD.");
-            String input = scn.next().toUpperCase();
-
-            if (input.equals("L")) {
-                direction[0] = -1;
-                direction[1] = 0;
-                break;
-            } else if (input.equals("R")) {
-                direction[0] = 1;
-                direction[1] = 0;
-                break;
-            } else if (input.equals("U")) {
-                direction[0] = 0;
-                direction[1] = -1;
-                break;
-            } else if (input.equals("D")) {
-                direction[0] = 0;
-                direction[1] = 1;
-                break;
-            } else if (input.equals("LU") || input.equals("UL")) {
-                direction[0] = -1;
-                direction[1] = -1;
-                break;
-            } else if (input.equals("LD") || input.equals("DL")) {
-                direction[0] = -1;
-                direction[1] = 1;
-                break;
-            } else if (input.equals("RU") || input.equals("UR")) {
-                direction[0] = 1;
-                direction[1] = -1;
-                break;
-            } else if (input.equals("RD") || input.equals("DR")) {
-                direction[0] = 1;
-                direction[1] = 1;
-                break;
-            } else {
-                System.out.println("Invalid direction. Please try again.");
-            }
-        }
+        setDirection();
     }
 
     /**
@@ -157,10 +114,9 @@ public class Player extends GeneralStats {
         boolean inputReceived = false;
         Scanner scn = new Scanner(System.in);
 
+        System.out.println("Press L or R to face left or right, U or D to face up or down, or a combination of left or right and up or down such as LU and RD.");
         while (!inputReceived) {
-            System.out.println("Press L or R to face left or right, U or D to face up or down, or a combination of left or right and up or down such as LU and RD.");
             String input = scn.next().toUpperCase();
-
             if (input.equals("L")) {
                 direction[0] = -1;
                 direction[1] = 0;

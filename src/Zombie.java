@@ -78,10 +78,9 @@ public class Zombie extends GeneralStats {
                     coordinates[1] -= 1;
                     moves--;
                     break;
-                } else {
-                    moves--;
                 }
             }
+            moves--;
         }
     }
 }
