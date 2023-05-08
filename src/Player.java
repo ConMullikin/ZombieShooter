@@ -94,9 +94,8 @@ public class Player extends GeneralStats {
                 coordinates[0] = coordinates[0] + 1;
                 coordinates[1] = coordinates[1] + 1;
                 break;
-            } else {
-                System.out.println("Invalid move. Please try again.");
             }
+            System.out.println("Invalid move. Please try again.");
         }
         setDirection();
     }
@@ -149,9 +148,8 @@ public class Player extends GeneralStats {
                 direction[0] = 1;
                 direction[1] = 1;
                 break;
-            } else {
-                System.out.println("Invalid direction. Please try again.");
             }
+            System.out.println("Invalid direction. Please try again.");
         }
     }
 
@@ -173,8 +171,16 @@ public class Player extends GeneralStats {
      */
     public int[] getCoords() { return this.coordinates; }
 
+    /**
+     * Getter which returns the player's number of move
+     * @return the player's number of moves
+     */
     public int getMoves() { return moves; }
 
+    /**
+     * Setter which sets the player's number of moves
+     * @param moves
+     */
     public void setMoves(int moves) { this.moves = moves; }
 
     /**

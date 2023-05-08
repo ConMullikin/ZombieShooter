@@ -21,7 +21,6 @@ public class Zombie extends GeneralStats {
     public Zombie() {
         Random rndm = new Random();
         int randNum = rndm.nextInt(4);
-        moves = 3;
 
         if (randNum == 0) {
             coordinates[0] = rndm.nextInt(30);
@@ -50,37 +49,31 @@ public class Zombie extends GeneralStats {
      */
     public void zombieMove(Player p) {
         Random rand = new Random();
-        int[] coords = p.getCoords();
         moves = 3;
 
-        while(moves > 0) {
-            int randNum = rand.nextInt(2);
+        while (moves > 0) {
+            int movesBefore = moves;
+            int position = rand.nextInt(2);
             for (int i = 0; i < 2; i++) {
-                if (randNum == 0) {
-                    randNum++;
+                if (position == 0) {
+                    position++;
                 } else {
-                    randNum--;
+                    position--;
                 }
 
-                if((randNum == 0) && (coords[0] > coordinates[0])) {
-                    coordinates[0] += 1;
+                if (p.getCoords()[position] > coordinates[position]) {
+                    coordinates[position] += 1;
                     moves--;
                     break;
-                } else if((randNum == 0) && (coords[0] < coordinates[0])) {
-                    coordinates[0] -= 1;
-                    moves--;
-                    break;
-                } else if((randNum == 1) && (coords[1] > coordinates[1])) {
-                    coordinates[1] += 1;
-                    moves--;
-                    break;
-                } else if ((randNum == 1) && (coords[1] < coordinates[1])) {
-                    coordinates[1] -= 1;
+                } else if (p.getCoords()[position] < coordinates[position]) {
+                    coordinates[position] -= 1;
                     moves--;
                     break;
                 }
             }
-            moves--;
+            if (movesBefore == moves) {
+                moves--;
+            }
         }
     }
 }

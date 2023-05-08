@@ -34,5 +34,5 @@ public class Bullet {
      * Returns the bullet's coordinates
      * @return
      */
-    public int[] getBulletCoords() { return bulletCoordinates; }
+    public int[] getCoords() { return bulletCoordinates; }
 }
