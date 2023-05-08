@@ -11,15 +11,15 @@ public class DamageMechanics {
      * @param zombies
      * @return
      */
-    public HashSet<Zombie> bulletTouchingZombie(Bullet bullet, HashSet<Zombie> zombies) {
+    public boolean bulletTouchingZombie(Bullet bullet, HashSet<Zombie> zombies) {
         int[] bulletCoords = bullet.getBulletCoords();
         for (Zombie zombie : zombies) {
             if (bulletCoords[0] == zombie.getCoords()[0] && bulletCoords[1] == zombie.getCoords()[1]) {
                 zombies.remove(zombie);
-                return zombies;
+                return true;
             }
         }
-        return zombies;
+        return false;
     }
 
     /**

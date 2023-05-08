@@ -66,40 +66,44 @@ public class Player extends GeneralStats {
         boolean inputReceived = false;
 
         while (!inputReceived) {
-            System.out.println("Press L to move left, R to move right, U to move up, and D to move down.");
-            char input = scn.next().toUpperCase().charAt(0);
+            System.out.println("Press L or R to move left or right, U or D to move up or down, or a combination of left or right and up or down such as LU and RD.");
+            String input = scn.next().toUpperCase();
 
-            if (input == 'L') {
-                if (coordinates[0] - 1 >= 0) {
-                    coordinates[0] -= 1;
-                    break;
-                }
-                System.out.println("Can't move player there because you would be out of bounds. Please try again.");
-            } else if (input == 'R') {
-                if (coordinates[0] + 1 <= 29) {
-                    coordinates[0] += 1;
-                    break;
-                }
-                System.out.println("Can't move player there because you would be out of bounds. Please try again.");
-            } else if (input == 'U') {
-                if (coordinates[1] - 1 <= 29) {
-                    coordinates[1] -= 1;
-                    break;
-                }
-                System.out.println("Can't move player there because you would be out of bounds. Please try again.");
-            } else if (input == 'D') {
-                if (coordinates[1] + 1 >= 0) {
-                    coordinates[1] += 1;
-                    break;
-                }
-                System.out.println("Can't move player there because you would be out of bounds. Please try again.");
+            if (input.equals("L")) {
+                coordinates[0] = coordinates[0] - 1;
+                break;
+            } else if (input.equals("R")) {
+                coordinates[0] = coordinates[0] + 1;
+                break;
+            } else if (input.equals("U")) {
+                coordinates[1] = coordinates[1] - 1;
+                break;
+            } else if (input.equals("D")) {
+                coordinates[1] = coordinates[1] + 1;
+                break;
+            } else if (input.equals("LU") || input.equals("UL")) {
+                coordinates[0] = coordinates[0] - 1;
+                coordinates[1] = coordinates[1] - 1;
+                break;
+            } else if (input.equals("LD") || input.equals("DL")) {
+                coordinates[0] = coordinates[0] - 1;
+                coordinates[1] = coordinates[1] + 1;
+                break;
+            } else if (input.equals("RU") || input.equals("UR")) {
+                coordinates[0] = coordinates[0] + 1;
+                coordinates[1] = coordinates[1] - 1;
+                break;
+            } else if (input.equals("RD") || input.equals("DR")) {
+                coordinates[0] = coordinates[0] + 1;
+                coordinates[1] = coordinates[1] + 1;
+                break;
             } else {
-                System.out.println("Invalid move. Please try again.");
+                System.out.println("Invalid direction. Please try again.");
             }
         }
 
         while (!inputReceived) {
-            System.out.println("Press L or R to face left or right, U or D to face up or down, or a combination of the left or right and up or down such as LU and RD.");
+            System.out.println("Press L or R to face left or right, U or D to face up or down, or a combination of left or right and up or down such as LU and RD.");
             String input = scn.next().toUpperCase();
 
             if (input.equals("L")) {
@@ -147,6 +151,55 @@ public class Player extends GeneralStats {
     public int[] getDirection() { return direction; }
 
     /**
+     * Sets direction of player at the beginning of the game
+     */
+    public void setDirection() {
+        boolean inputReceived = false;
+        Scanner scn = new Scanner(System.in);
+
+        while (!inputReceived) {
+            System.out.println("Press L or R to face left or right, U or D to face up or down, or a combination of left or right and up or down such as LU and RD.");
+            String input = scn.next().toUpperCase();
+
+            if (input.equals("L")) {
+                direction[0] = -1;
+                direction[1] = 0;
+                break;
+            } else if (input.equals("R")) {
+                direction[0] = 1;
+                direction[1] = 0;
+                break;
+            } else if (input.equals("U")) {
+                direction[0] = 0;
+                direction[1] = -1;
+                break;
+            } else if (input.equals("D")) {
+                direction[0] = 0;
+                direction[1] = 1;
+                break;
+            } else if (input.equals("LU") || input.equals("UL")) {
+                direction[0] = -1;
+                direction[1] = -1;
+                break;
+            } else if (input.equals("LD") || input.equals("DL")) {
+                direction[0] = -1;
+                direction[1] = 1;
+                break;
+            } else if (input.equals("RU") || input.equals("UR")) {
+                direction[0] = 1;
+                direction[1] = -1;
+                break;
+            } else if (input.equals("RD") || input.equals("DR")) {
+                direction[0] = 1;
+                direction[1] = 1;
+                break;
+            } else {
+                System.out.println("Invalid direction. Please try again.");
+            }
+        }
+    }
+
+    /**
      * Returns player's number of lives left
      * @return
      */
@@ -174,13 +227,12 @@ public class Player extends GeneralStats {
      */
     public void setCoords(HashSet<Zombie> zombies) {
         Random rndm = new Random();
-        boolean zombieNearby;
         boolean coordsSet = false;
         int coordsChange = 0;
+        boolean zombieInSpot;
 
         while (!coordsSet) {
-            zombieNearby = false;
-
+            zombieInSpot = false;
             if (rndm.nextInt(2) == 0) {
                 if (rndm.nextInt(2) == 0) {
                     coordsChange = 3;
@@ -188,38 +240,32 @@ public class Player extends GeneralStats {
                     coordsChange = -3;
                 }
                 for (Zombie zombie : zombies) {
-                    if ((zombie.getCoords()[0] >= coordinates[0] + coordsChange - 2) && (zombie.getCoords()[0] <= coordinates[0] + coordsChange + 2) && (zombie.getCoords()[1] >= coordinates[1] - 2) && (zombie.getCoords()[1] <= coordinates[1] + 2)) {
-                        zombieNearby = true;
+                    if ((zombie.getCoords()[0] == coordinates[0] + coordsChange) && (zombie.getCoords()[1] == coordinates[1])) {
+                        zombieInSpot = true;
+                        break;
                     }
                 }
-                if (!zombieNearby && (coordinates[0] + coordsChange >= 0) && (coordinates[0] + coordsChange <= 29)) {
+                if ((coordinates[0] + coordsChange >= 0) && (coordinates[0] + coordsChange <= 29) && !zombieInSpot) {
                     coordinates[0] = coordinates[0] + coordsChange;
                     break;
                 }
             } else {
                 if (rndm.nextInt(2) == 0) {
-                    if (rndm.nextInt(2) == 0) {
-                        coordsChange = 3;
-                    } else {
-                        coordsChange = -3;
-                    }
+                    coordsChange = 3;
+                } else {
+                    coordsChange = -3;
                 }
                 for (Zombie zombie : zombies) {
-                    if ((zombie.getCoords()[0] >= coordinates[0] - 2) && (zombie.getCoords()[0] <= coordinates[0] + 2) && (zombie.getCoords()[1] >= coordinates[1] + coordsChange - 2) && (zombie.getCoords()[1] <= coordinates[1] + coordsChange + 2)) {
-                        zombieNearby = true;
+                    if ((zombie.getCoords()[1] == coordinates[1]) && (zombie.getCoords()[1] == coordinates[1] + coordsChange)) {
+                        zombieInSpot = true;
+                        break;
                     }
                 }
-                if (!zombieNearby && (coordinates[1] + coordsChange >= 0) && (coordinates[1] + coordsChange <= 29)) {
+                if ((coordinates[1] + coordsChange >= 0) && (coordinates[1] + coordsChange <= 9) && !zombieInSpot) {
                     coordinates[1] = coordinates[1] + coordsChange;
                     break;
                 }
             }
-        }
-
-        if (coordinates[0] + 3 <= 29) {
-            coordinates[0] = coordinates[0] + 2;
-        } else {
-            coordinates[0] = coordinates[0] - 2;
         }
     }
 }

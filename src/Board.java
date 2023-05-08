@@ -1,5 +1,6 @@
 import java.util.ArrayList;
 import java.util.HashSet;
+import java.util.Objects;
 
 public class Board {
     /**
@@ -42,7 +43,17 @@ public class Board {
         board[player.getCoords()[0]][player.getCoords()[1]] = "X";
 
         for (Zombie zombie : zombies) {
-            board[zombie.getCoords()[0]][zombie.getCoords()[1]] = "Z";
+            if (Objects.equals(board[zombie.getCoords()[0]][zombie.getCoords()[1]], "4")) {
+                board[zombie.getCoords()[0]][zombie.getCoords()[1]] = "5";
+            } else if (Objects.equals(board[zombie.getCoords()[0]][zombie.getCoords()[1]], "3")) {
+                board[zombie.getCoords()[0]][zombie.getCoords()[1]] = "4";
+            } else if (Objects.equals(board[zombie.getCoords()[0]][zombie.getCoords()[1]], "2")) {
+                board[zombie.getCoords()[0]][zombie.getCoords()[1]] = "3";
+            } else if (Objects.equals(board[zombie.getCoords()[0]][zombie.getCoords()[1]], "Z")) {
+                board[zombie.getCoords()[0]][zombie.getCoords()[1]] = "2";
+            } else {
+                board[zombie.getCoords()[0]][zombie.getCoords()[1]] = "Z";
+            }
         }
 
         for (int i = 0; i < boardHeight; i++) {

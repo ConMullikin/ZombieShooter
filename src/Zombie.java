@@ -18,42 +18,23 @@ public class Zombie extends GeneralStats {
     /**
      * Constructor which instantiates an instance of a zombie
      */
-    public Zombie(HashSet<Zombie> zombies) {
+    public Zombie() {
+        Random rndm = new Random();
+        int randNum = rndm.nextInt(4);
         moves = 3;
 
-        boolean coordsAdded = false;
-        boolean spaceAvailable;
-        Random rndm = new Random();
-
-        while (!coordsAdded) {
-            spaceAvailable = true;
-            if (rndm.nextInt(0,4) == 0) {
-                coordinates[0] = rndm.nextInt(30);
-                coordinates[1] = 0;
-            }
-            if (rndm.nextInt(0,4) == 1) {
-                coordinates[0] = rndm.nextInt(30);
-                coordinates[1] = 9;
-            }
-            if (rndm.nextInt(0,4) == 2) {
-                coordinates[0] = 0;
-                coordinates[1] = rndm.nextInt(10);
-            }
-            if (rndm.nextInt(0,4) == 3) {
-                coordinates[0] = 29;
-                coordinates[1] = rndm.nextInt(10);
-            }
-            if (!zombies.isEmpty()) {
-                for (Zombie zombie : zombies) {
-                    if (zombie.getCoords()[0] == coordinates[0] && zombie.getCoords()[1] == coordinates[1]) {
-                        spaceAvailable = false;
-                        break;
-                    }
-                }
-            }
-            if (spaceAvailable) {
-                break;
-            }
+        if (randNum == 0) {
+            coordinates[0] = rndm.nextInt(30);
+            coordinates[1] = 0;
+        } else if (randNum == 1) {
+            coordinates[0] = rndm.nextInt(30);
+            coordinates[1] = 9;
+        } else if (randNum == 2) {
+            coordinates[0] = 0;
+            coordinates[1] = rndm.nextInt(10);
+        } else {
+            coordinates[0] = 29;
+            coordinates[1] = rndm.nextInt(10);
         }
     }
 
@@ -67,82 +48,40 @@ public class Zombie extends GeneralStats {
      * Method which has the zombie move towards the player (zombies will have access to player coordinates as a
      * reference at each turn)
      */
-    public void zombieMove(Player p, HashSet<Zombie> zombies) {
+    public void zombieMove(Player p) {
         Random rand = new Random();
         int[] coords = p.getCoords();
         moves = 3;
-        boolean touchingZombie;
-        int randNum = rand.nextInt(2);
 
         while(moves > 0) {
-            touchingZombie = false;
-            if((randNum == 0) && (coords[0] > coordinates[0])) {
-                for (Zombie zombie : zombies) {
-                    if ((zombie.getCoords()[0] == coordinates[0] + 1) && (zombie.getCoords()[1] == coordinates[1])) {
-                        touchingZombie = true;
-                        break;
-                    }
+            int randNum = rand.nextInt(2);
+            for (int i = 0; i < 2; i++) {
+                if (randNum == 0) {
+                    randNum++;
+                } else {
+                    randNum--;
                 }
-                if (!touchingZombie) {
+
+                if((randNum == 0) && (coords[0] > coordinates[0])) {
                     coordinates[0] += 1;
                     moves--;
-                }
-            }
-            else if((randNum == 0) && (coords[0] < coordinates[0])) {
-                for (Zombie zombie : zombies) {
-                    if ((zombie.getCoords()[0] == coordinates[0] - 1) && (zombie.getCoords()[1] == coordinates[1])) {
-                        touchingZombie = true;
-                        break;
-                    }
-                }
-                if (!touchingZombie) {
+                    break;
+                } else if((randNum == 0) && (coords[0] < coordinates[0])) {
                     coordinates[0] -= 1;
                     moves--;
-                }
-            }
-            else if((randNum == 1) && (coords[1] > coordinates[1])) {
-                for (Zombie zombie : zombies) {
-                    if ((zombie.getCoords()[0] == coordinates[0]) && (zombie.getCoords()[1] == coordinates[1] + 1)) {
-                        touchingZombie = true;
-                        break;
-                    }
-                }
-                if (!touchingZombie) {
+                    break;
+                } else if((randNum == 1) && (coords[1] > coordinates[1])) {
                     coordinates[1] += 1;
                     moves--;
-                }
-            }
-            else if ((randNum == 1) && (coords[1] < coordinates[1])) {
-                for (Zombie zombie : zombies) {
-                    if ((zombie.getCoords()[0] == coordinates[0]) && (zombie.getCoords()[1] == coordinates[1] - 1)) {
-                        touchingZombie = true;
-                        break;
-                    }
-                }
-                if (!touchingZombie) {
+                    break;
+                } else if ((randNum == 1) && (coords[1] < coordinates[1])) {
                     coordinates[1] -= 1;
                     moves--;
-                }
-            } else {
-                if (coordinates[0] > coords[0]) {
-                    coordinates[0] = coordinates[0] - 2;
-                }
-                else if (coordinates[0] < coords[0]) {
-                    coordinates[0] = coordinates[0] + 2;
-                }
-                else if (coordinates[1] > coords[1]) {
-                    coordinates[0] = coordinates[0] - 2;
-                }
-                else {
-                    coordinates[0] = coordinates[0] + 2;
+                    break;
+                } else {
+                    moves--;
                 }
             }
         }
     }
-
-    /**
-     * Getter method for the positional coordinates of a zombie
-     * @return the positional coordinates for a zombie in the 2-D array
-     */
-    public int[] getZombieCoords() { return coordinates; }
 }

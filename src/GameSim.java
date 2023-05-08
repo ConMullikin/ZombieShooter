@@ -12,7 +12,7 @@ public class GameSim {
     /**
      * Queue that stores the amount of zombies spawned in each following wave
      */
-    private final Queue<Integer> zombiesSpawn = new LinkedList<>(Arrays.asList(3, 5, 7, 9, 11));
+    private final Queue<Integer> zombiesSpawn = new LinkedList<>(Arrays.asList(3, 5));
 
     /**
      * Runs the actual game
@@ -22,39 +22,59 @@ public class GameSim {
         GeneralStats genStats = new GeneralStats();
         Player player = new Player();
         DamageMechanics mechanics = new DamageMechanics();
-        zombies = zombieGeneration();
+        zombieGeneration();
         board.printBoard(zombies, player);
+        player.setDirection();
 
-        while(player.getLives() > 0 && !zombiesSpawn.isEmpty()) {
+        while(player.getLives() > 0 && (!zombiesSpawn.isEmpty() || !zombies.isEmpty())) {
             while (player.getMoves() > 0) {
                 if (player.makeTurn()) {
                     player.playerMove();
-                    if (mechanics.zombieTouchingPlayer(player, zombies)) {
-                        player.setLives(player.getLives() - 1);
-                        if (player.getLives() == 0) {
-                            break;
-                        }
-                        player.setCoords(zombies);
-                    }
                 }
                 else {
                     Bullet bullet = new Bullet(player.getCoords(), player.getDirection());
                     while (bullet.getBulletCoords()[0] <= 29 && bullet.getBulletCoords()[0] >= 0 && bullet.getBulletCoords()[1] <= 9 && bullet.getBulletCoords()[1] >= 0) {
                         bullet.moveBullet();
-                        mechanics.bulletTouchingZombie(bullet, zombies);
-                        if (zombies.isEmpty()) {
-                            zombies = zombieGeneration();
+                        if (mechanics.bulletTouchingZombie(bullet, zombies)) {
+                            genStats.setKills(genStats.getKills() + 1);
+                            break;
                         }
                     }
                 }
                 player.setMoves(player.getMoves() - 1);
+                if (mechanics.zombieTouchingPlayer(player, zombies)) {
+                    player.setLives(player.getLives() - 1);
+                    if (player.getLives() == 0) {
+                        break;
+                    }
+                    System.out.println("Ouch! You are down to " + player.getLives() + " lives left.");
+                    player.setCoords(zombies);
+                    player.setMoves(3);
+                }
+                if (zombies.isEmpty()) {
+                    if (zombiesSpawn.isEmpty()) {
+                        break;
+                    }
+                    zombieGeneration();
+                    player.setMoves(3);
+                }
                 if (player.getMoves() != 0) {
                     board.printBoard(zombies, player);
                 }
             }
             genStats.setTurns(genStats.getTurns() + 1);
             for (Zombie zombie : zombies) {
-                zombie.zombieMove(player, zombies);
+                zombie.zombieMove(player);
+                if (mechanics.zombieTouchingPlayer(player, zombies)) {
+                    if (player.getLives() == 0) {
+                        break;
+                    }
+                    player.setLives(player.getLives() - 1);
+                    System.out.println("Ouch! You are down to " + player.getLives() + " lives left.");
+                    player.setCoords(zombies);
+                    player.setMoves(3);
+                    break;
+                }
             }
             board.printBoard(zombies, player);
             player.setMoves(3);
@@ -71,13 +91,12 @@ public class GameSim {
      * Generates number of zombies pertaining to the wave in queue and returns the objects in a new HashSet
      * @return the new HashSet
      */
-    public HashSet<Zombie> zombieGeneration() {
+    public void zombieGeneration() {
         int numZombies = zombiesSpawn.remove();
 
         while (zombies.size() < numZombies) {
-            Zombie zombie = new Zombie(zombies);
+            Zombie zombie = new Zombie();
             zombies.add(zombie);
         }
-        return zombies;
     }
 }
