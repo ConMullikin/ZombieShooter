@@ -94,9 +94,8 @@ public class Player extends GeneralStats {
                 coordinates[0] = coordinates[0] + 1;
                 coordinates[1] = coordinates[1] + 1;
                 break;
-            } else {
-                System.out.println("Invalid move. Please try again.");
             }
+            System.out.println("Invalid move. Please try again.");
         }
         setDirection();
     }
@@ -149,9 +148,8 @@ public class Player extends GeneralStats {
                 direction[0] = 1;
                 direction[1] = 1;
                 break;
-            } else {
-                System.out.println("Invalid direction. Please try again.");
             }
+            System.out.println("Invalid direction. Please try again.");
         }
     }
 
