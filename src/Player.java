@@ -47,7 +47,7 @@ public class Player extends GeneralStats {
         System.out.println("Press M to move, S to shoot, and D to change direction.");
         while (!inputReceived) {
             String input = scn.next().toUpperCase();
-            if (Objects.equals(input, "M") || Objects.equals(input, "S") || Objects.equals(input, "D")) {
+            if (Objects.equals(input, "M") || Objects.equals(input, "S") || Objects.equals(input, "D") || Objects.equals(input, "Q")) {
                 return input;
             }
             System.out.println("Incorrect input received, try again.");

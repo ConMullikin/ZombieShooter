@@ -24,9 +24,10 @@ public class GameSim {
         Player player = new Player();
         Scanner scn = new Scanner(System.in);
 
+        boolean exitGame = false;
         boolean inputReceived = false;
         String input;
-        System.out.println("Press E for easy difficulty, M for medium difficulty, and H for hard difficulty.");
+        System.out.println("Press 'E' for easy difficulty, 'M' for medium difficulty, and 'H' for hard difficulty. Alternatively, press 'Q' to quit.");
         while (!inputReceived) {
             input = scn.next().toUpperCase();
             if (input.equals("E")) {
@@ -39,14 +40,22 @@ public class GameSim {
                 zombiesSpawn = new LinkedList<>(Arrays.asList(3,5,7,9,11,13,15));
                 break;
             }
+            else if (input.equals("Q")) {
+                exitGame = true;
+                break;
+            }
             System.out.println("Invalid input, please try again.");
         }
 
-        zombieGeneration();
-        board.printBoard(zombies, player);
-        player.setDirection();
+        if (!exitGame) {
+            zombieGeneration();
+            board.printBoard(zombies, player);
+            player.setDirection();
+        }
 
-        while(player.getLives() > 0 && (!zombiesSpawn.isEmpty() || !zombies.isEmpty())) {
+
+        while(player.getLives() > 0 && (!zombiesSpawn.isEmpty() || !zombies.isEmpty()) && (!exitGame)) {
+
             while (player.getMoves() > 0) {
                 input = player.makeTurn();
                 if (Objects.equals(input, "M")) {
@@ -60,7 +69,12 @@ public class GameSim {
                             break;
                         }
                     }
-                } else {
+                }
+                else if (Objects.equals(input, "Q")) {
+                    exitGame = true;
+                    break;
+                }
+                else {
                     player.setDirection();
                 }
                 player.setMoves(player.getMoves() - 1);
@@ -108,10 +122,13 @@ public class GameSim {
             board.printBoard(zombies, player);
             player.setMoves(3);
         }
-        if (player.getLives() > 0) {
+        if (player.getLives() > 0 && !exitGame) {
             System.out.println("Congrats, you win!");
-        } else {
+        } else if (player.getLives() == 0 && !exitGame) {
             System.out.println("Sorry, you lose!");
+        }
+        else if (exitGame) {
+            System.out.println("Thank you for playing!");
         }
         System.out.println("You lasted " + genStats.getTurns() + " turns and killed " + genStats.getKills() + " zombies.");
     }
