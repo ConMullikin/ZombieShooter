@@ -2,7 +2,6 @@
  * Class used to track general game statistics
  */
 public class GeneralStats {
-
     /**
      * Integer value which keeps track of the current turn
      */

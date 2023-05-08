@@ -4,7 +4,6 @@ import java.util.*;
  * Simulates the game by creating Player and Zombie objects and calling upon them to simulate their turns, printing the board out after each turn
  */
 public class GameSim {
-
     /**
      * Holds all the zombies currently at play in a HashSet
      */
@@ -15,7 +14,7 @@ public class GameSim {
     private Queue<Integer> zombiesSpawn;
 
     /**
-     * Runs the actual game
+     * Sims the game
      */
     public void gameSim() {
         Board board = new Board();
@@ -53,7 +52,7 @@ public class GameSim {
                     player.playerMove();
                 } else if (Objects.equals(input, "S")) {
                     Bullet bullet = new Bullet(player.getCoords(), player.getDirection());
-                    while (bullet.getBulletCoords()[0] <= 29 && bullet.getBulletCoords()[0] >= 0 && bullet.getBulletCoords()[1] <= 9 && bullet.getBulletCoords()[1] >= 0) {
+                    while (bullet.getCoords()[0] <= 29 && bullet.getCoords()[0] >= 0 && bullet.getCoords()[1] <= 9 && bullet.getCoords()[1] >= 0) {
                         bullet.moveBullet();
                         if (mechanics.bulletTouchingZombie(bullet, zombies)) {
                             genStats.setKills(genStats.getKills() + 1);

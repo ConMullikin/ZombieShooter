@@ -12,7 +12,7 @@ public class DamageMechanics {
      * @return
      */
     public boolean bulletTouchingZombie(Bullet bullet, HashSet<Zombie> zombies) {
-        int[] bulletCoords = bullet.getBulletCoords();
+        int[] bulletCoords = bullet.getCoords();
         for (Zombie zombie : zombies) {
             if (bulletCoords[0] == zombie.getCoords()[0] && bulletCoords[1] == zombie.getCoords()[1]) {
                 zombies.remove(zombie);
