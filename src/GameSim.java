@@ -38,8 +38,7 @@ public class GameSim {
             } else if (input.equals("H")) {
                 zombiesSpawn = new LinkedList<>(Arrays.asList(3,5,7,9,11,13,15));
                 break;
-            }
-            else if (input.equals("Q")) {
+            } else if (input.equals("Q")) {
                 exitGame = true;
                 break;
             }
@@ -50,77 +49,76 @@ public class GameSim {
             zombieGeneration();
             board.printBoard(zombies, player);
             player.setDirection();
-        }
 
-
-        while(player.getLives() > 0 && (!zombiesSpawn.isEmpty() || !zombies.isEmpty()) && (!exitGame)) {
-
-            while (player.getMoves() > 0) {
-                input = player.makeTurn();
-                if (Objects.equals(input, "M")) {
-                    player.playerMove();
-                } else if (Objects.equals(input, "S")) {
-                    Bullet bullet = new Bullet(player.getCoords(), player.getDirection());
-                    while (bullet.getCoords()[0] <= 29 && bullet.getCoords()[0] >= 0 && bullet.getCoords()[1] <= 9 && bullet.getCoords()[1] >= 0) {
-                        bullet.moveBullet();
-                        if (mechanics.bulletTouchingZombie(bullet, zombies)) {
-                            genStats.setKills(genStats.getKills() + 1);
-                            break;
+            while (player.getLives() > 0 && (!zombiesSpawn.isEmpty() || !zombies.isEmpty()) && (!exitGame)) {
+                while (player.getMoves() > 0) {
+                    input = player.makeTurn();
+                    if (Objects.equals(input, "M")) {
+                        player.playerMove();
+                    } else if (Objects.equals(input, "S")) {
+                        Bullet bullet = new Bullet(player.getCoords(), player.getDirection());
+                        while (bullet.getCoords()[0] <= 29 && bullet.getCoords()[0] >= 0 && bullet.getCoords()[1] <= 9 && bullet.getCoords()[1] >= 0) {
+                            bullet.moveBullet();
+                            if (mechanics.bulletTouchingZombie(bullet, zombies)) {
+                                genStats.setKills(genStats.getKills() + 1);
+                                break;
+                            }
                         }
                     }
+                    else if (Objects.equals(input, "Q")) {
+                        exitGame = true;
+                        break;
+                    }
+                    else {
+                        player.setDirection();
+                    }
+                    player.setMoves(player.getMoves() - 1);
+                    if (mechanics.zombieTouchingPlayer(player, zombies)) {
+                        player.setLives(player.getLives() - 1);
+                        if (player.getLives() == 0) {
+                            break;
+                        }
+                        System.out.println("Ouch! You are down to " + player.getLives() + " lives left.");
+                        player.setCoords(zombies);
+                        player.setMoves(3);
+                    }
+                    if (zombies.isEmpty()) {
+                        if (zombiesSpawn.isEmpty()) {
+                            break;
+                        }
+                        zombieGeneration();
+                        if (mechanics.zombieTouchingPlayer(player, zombies)) {
+                            if (player.getLives() == 0) {
+                                break;
+                            }
+                            player.setLives(player.getLives() - 1);
+                            System.out.println("Ouch! You are down to " + player.getLives() + " lives left.");
+                            player.setCoords(zombies);
+                        }
+                        player.setMoves(3);
+                    }
+                    if (player.getMoves() != 0) {
+                        board.printBoard(zombies, player);
+                    }
                 }
-                else if (Objects.equals(input, "Q")) {
-                    exitGame = true;
-                    break;
+                genStats.setTurns(genStats.getTurns() + 1);
+                for (Zombie zombie : zombies) {
+                    zombie.zombieMove(player);
                 }
-                else {
-                    player.setDirection();
-                }
-                player.setMoves(player.getMoves() - 1);
                 if (mechanics.zombieTouchingPlayer(player, zombies)) {
-                    player.setLives(player.getLives() - 1);
                     if (player.getLives() == 0) {
                         break;
                     }
+                    player.setLives(player.getLives() - 1);
                     System.out.println("Ouch! You are down to " + player.getLives() + " lives left.");
                     player.setCoords(zombies);
                     player.setMoves(3);
                 }
-                if (zombies.isEmpty()) {
-                    if (zombiesSpawn.isEmpty()) {
-                        break;
-                    }
-                    zombieGeneration();
-                    if (mechanics.zombieTouchingPlayer(player, zombies)) {
-                        if (player.getLives() == 0) {
-                            break;
-                        }
-                        player.setLives(player.getLives() - 1);
-                        System.out.println("Ouch! You are down to " + player.getLives() + " lives left.");
-                        player.setCoords(zombies);
-                    }
-                    player.setMoves(3);
-                }
-                if (player.getMoves() != 0) {
-                    board.printBoard(zombies, player);
-                }
-            }
-            genStats.setTurns(genStats.getTurns() + 1);
-            for (Zombie zombie : zombies) {
-                zombie.zombieMove(player);
-            }
-            if (mechanics.zombieTouchingPlayer(player, zombies)) {
-                if (player.getLives() == 0) {
-                    break;
-                }
-                player.setLives(player.getLives() - 1);
-                System.out.println("Ouch! You are down to " + player.getLives() + " lives left.");
-                player.setCoords(zombies);
+                board.printBoard(zombies, player);
                 player.setMoves(3);
             }
-            board.printBoard(zombies, player);
-            player.setMoves(3);
         }
+
         if (player.getLives() > 0 && !exitGame) {
             System.out.println("Congrats, you win!");
         } else if (player.getLives() == 0 && !exitGame) {
